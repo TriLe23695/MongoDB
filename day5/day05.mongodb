@@ -1,0 +1,30 @@
+
+use sample_analytics
+// Lấy danh sách 5 tài khoản
+db.accounts.find().pretty().limit(5)
+// Lấy danh sách 5 tài khoản có limit là 10000
+db.accounts.find({"limit":10000}).limit(5)
+// Lấy tài khoản có account_id là 38377
+db.accounts.findOne({"account_id":383777})
+// Hiển thị danh sách sản phẩm của các account, chỉ lấy 5 account
+db.accounts.find({},{"products":1,"_id":0}).limit(5)          // Projection 1 thuộc tính trong collectionasd
+// Hiển thị các danh sách của sản phẩm 3837777
+db.accounts.findOne({"account_id":383777},{"products":1})
+// Hiển thị 5 tài khoản có sản phẩm là InvestmentStock
+db.accounts.find({"products":{$in:["InvestmentStock"]}}).limit(5)
+// Hiển thị 5 tài khoản trong đó có 4 sản phẩm
+db.accounts.find({'products':{$size:4}}).limit(5)
+// Hiển thị 5 tài khoản có ít nhất 4 sản phẩm
+db.accounts.find({'products':{$exists:true},$where:"this.products.length>=4"}).limit(5)
+// Hiển thị danh sách 5 tài khoản có limit >=10000
+db.accounts.find({'limit':{'$gte':10000}}).limit(5)
+// Hiển thị danh sách 5 tài khoản có limit >=10000 và product có Investment hoặc Commody
+db.accounts.find({"limit":{"$gte":10000},"products":{$in:["InvestmentStock","Commodity"]}})
+// Hiển thị danh sách 5 tài khoản có limit >=10000 và product có Investment hoặc Commody hoặc có ít nhất 5 sp
+
+
+// Hiển thị danh sách username, name, address, email và active của 5 khách hàng 
+
+// Hiển thị danh sách 5 khách hàng ở plaza
+db.customers.find({'address':/.*Plaza*./})
+// Lấy danh sách 5 khách hàng có tháng sinh là 5
